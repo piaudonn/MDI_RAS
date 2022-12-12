@@ -165,6 +165,49 @@ class RadiusAttribute
     }
 }
 
+<#
+.Synopsis
+    Sends a Radius Accounting request packet to a listening Radius accounting server.
+.DESCRIPTION
+    This was created to simulate VPN connexions for the Microsoft Defender for Identity sensors when Radius accounting integration is enabled (https://learn.microsoft.com/en-us/defender-for-identity/vpn-integration).
+.EXAMPLE
+    Test-RadiusAccounting -Server SERVER1 -Secret "Secret" -Username "CONTOSO\Bob" -Machine "WORKSTATION1" -IP "1.2.3.4"
+.INPUTS
+    -Server
+        IP address or FQDN of the server listening to Radius Accounting packets. In Microsoft Defender for Identity, it is any domain controller with the sensor deployed.
+    
+    -Port
+        The port used for Radius accounting, default is 1813.
+        
+    -Secret
+        The Radius secret to calculate the authenticator of the Radius accounting request.
+        
+    -Username
+        The username in the DOMAIN\sAMAccountName fortmat or UserPrincipalName format.
+        
+    -Machine
+        The NetBIOS name of the machine from which the client is connected.
+        
+    -IP
+        The egress IP address of the client (Internet IP address).
+
+    -FrameIPAddress
+        The client IP address as seen by the VPN server.
+        
+    -NASIPaddress
+        The IP address of the VPN server.
+        
+    -NASIdentifier
+        The name of the VPN server.
+        
+    -SessionID
+        The Radius session ID. Default is generated randomly.
+
+.NOTES
+    2022/12/12 - Version 1
+        - Needs to implement params validation
+        - Needs to implement Accounting Response authenticator check
+#>
 function Test-RadiusAccounting {
     param(
         $Server ,
@@ -230,12 +273,3 @@ function Test-RadiusAccounting {
 }
 
 Export-ModuleMember -Function Test-RadiusAccounting
-<#
-Test-RadiusAccounting `
-    -Server DC01 `
-    -Secret "12356" `
-    -Port 1813 `
-    -Username "AD\piaudonn" `
-    -Machine "CEO01" `
-    -IP "23.12.1.8" `
-#>
