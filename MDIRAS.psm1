@@ -71,6 +71,16 @@ class RadiusAccountPacket
         $_md5 = New-Object System.Security.Cryptography.MD5CryptoServiceProvider
         return ( [System.BitConverter]::ToString( $_md5.ComputeHash($_Stream) ) -eq [System.BitConverter]::ToString( $this.Authenticator ) )
     }
+    [bool] CheckResponseAuthenticator( [string] $_Secret, [byte[]] $_ReceivedAuthenticator )
+    {
+        [byte[]] $_Stream = $this.Type + `
+            [byte[]] $this.Identifier + `
+            [byte[]] $this.Length + `
+            [byte[]] $this.Authenticator + `
+            [byte[]] [System.Text.Encoding]::UTF8.GetBytes($_Secret)
+        $_md5 = New-Object System.Security.Cryptography.MD5CryptoServiceProvider
+        return ( [System.BitConverter]::ToString( $_md5.ComputeHash($_Stream) ) -eq [System.BitConverter]::ToString( $_ReceivedAuthenticator ) )
+    }
     [byte[]] GetStream()
     {
         $this.Length = [System.BitConverter]::GetBytes( [char] ( $this.Attributes.Length + 20 ) )[1..0]
@@ -273,3 +283,10 @@ function Test-RadiusAccounting {
 }
 
 Export-ModuleMember -Function Test-RadiusAccounting
+#"1233","123","lalala" | %{
+#    [byte[]] $build = [byte[]] (0x5,0x1,0x0,20) +
+#                          (New-Object byte[] 16) +
+#                          [System.Text.Encoding]::UTF8.GetBytes($_)
+#    $_md5 = New-Object System.Security.Cryptography.MD5CryptoServiceProvider
+#    [System.BitConverter]::ToString( $_md5.ComputeHash($build) )
+#}
