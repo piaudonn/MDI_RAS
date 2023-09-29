@@ -5,13 +5,19 @@ This is a PowerShell module that allow you to test the [VPN log integration in M
 The module only has one function: `Test-RadiusAccounting` that you would use this way:
 
 ```PowerShell
-Test-RadiusAccounting -Server SERVER1 -Secret "Secret" -Username "CONTOSO\Bob" -Machine "WORKSTATION1" -IP "1.2.3.4"
+Test-RadiusAccounting
+  -Server SERVER1 `
+  -Secret "Secret" `
+  -Username "CONTOSO\Bob" `
+  -Machine "WORKSTATION1" `
+  -IP "1.2.3.4"
 ```
 
 The `Server` here is the IP address or the name of a domain controller where the MDI sensor is installed.
 The `IP` is the source IP address you want MDI to think your user `Username` is connecting from. 
 
-It will show as a VPN connection in the Defender portal user's timeline.
+It will show as a VPN connection in the Defender portal user's timeline: <img width="571" alt="image" src="https://github.com/piaudonn/MDI-RAS/assets/22434561/56739e55-b308-43bb-a4e2-273be59f7a41">
+
 
 ## What is it not?
 
