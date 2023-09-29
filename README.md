@@ -2,7 +2,7 @@
 ### What is it?
 This is a PowerShell module that allow you to test the [VPN log integration in Microsoft Defender for Identity](https://learn.microsoft.com/en-us/defender-for-identity/vpn-integration). 
 
-The module only has one function: `Test-RadiusAccounting` that you would use this way:
+Once imported, the module add the following cmdlet `Test-RadiusAccounting` that you would use this way:
 
 ```PowerShell
 Test-RadiusAccounting
@@ -18,6 +18,7 @@ The `IP` is the source IP address you want MDI to think your user `Username` is 
 
 It will show as a VPN connection in the Defender portal user's timeline: <img width="571" alt="image" src="https://github.com/piaudonn/MDI-RAS/assets/22434561/56739e55-b308-43bb-a4e2-273be59f7a41">
 
+It also supports sending `FrameIPAddress` (the client IP address as seen by the VPN server), `NASIPaddress` (the IP address of the VPN server), `NASIdentifier` (the name of the VPN server) and arbitrary `SessionId`. Use `Get-Help Test-RadiusAccounting` for more information.
 
 ## What is it not?
 
